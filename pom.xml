@@ -9,7 +9,7 @@
         <version>2.1.6.RELEASE</version>
     </parent>
     <groupId>br.com.fiap.webservice</groupId>
-    <artifactId>processor-app</artifactId>
+    <artifactId>contact-app</artifactId>
     <version>1.0.0</version>
     <name>contact-app</name>
     <description>Gerenciador de cadastro de clientes para contatos</description>
