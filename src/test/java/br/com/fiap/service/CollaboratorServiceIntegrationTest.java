@@ -38,11 +38,11 @@ public class CollaboratorServiceIntegrationTest {
     @Before
     @Transactional("transactionManager")
     public void setUp() {
-        collaboratorRepository.save(mockStudent());
+        collaboratorRepository.save(mockCollaborator());
     }
 
     @Test
-    public void shouldAddStudentSuccessfully() {
+    public void shouldAddCollaboratorSuccessfully() {
 
         ResponseEntity<String> response = collaboratorService.add(new Collaborator(111000, "New Collaborator Name"));
 
@@ -50,49 +50,49 @@ public class CollaboratorServiceIntegrationTest {
     }
 
     @Test
-    public void shouldUpdateStudentSuccessfully() {
+    public void shouldUpdateCollaboratorSuccessfully() {
 
-        ResponseEntity<String> response = collaboratorService.updateStudentByStudentRegistrationNumber(new Collaborator(
-                mockStudent().getStudentRegistrationNumber(),
+        ResponseEntity<String> response = collaboratorService.updateCollaboratorByRegistrationNumber(new Collaborator(
+                mockCollaborator().getCollaboratorRegistrationNumber(),
                 "New Name"
-        ), mockStudent().getStudentRegistrationNumber());
+        ), mockCollaborator().getCollaboratorRegistrationNumber());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
-    public void shouldGetAllStudentsSuccessfully() {
+    public void shouldGetAllCollaboratorsSuccessfully() {
 
-        List<Collaborator> Collaborators = (List<Collaborator>) collaboratorService.getAllStudents();
+        List<Collaborator> Collaborators = (List<Collaborator>) collaboratorService.getAllCollaborators();
 
         assertTrue(Collaborators.size() == 1);
     }
 
     @Test
-    public void shouldFindStudentByNameSuccessfully() {
+    public void shouldFindCollaboratorByNameSuccessfully() {
 
-        List<Collaborator> Collaborators = collaboratorService.findByName(mockStudent().getName());
+        List<Collaborator> Collaborators = collaboratorService.findByName(mockCollaborator().getName());
 
-        assertEquals(mockStudent().getName(), Collaborators.get(0).getName());
+        assertEquals(mockCollaborator().getName(), Collaborators.get(0).getName());
     }
 
     @Test
-    public void shouldFindStudentByRegistrantionNumberSuccessfully() {
+    public void shouldFindCollaboratorByRegistrantionNumberSuccessfully() {
 
-        Collaborator COLLABORATOR = collaboratorService.findByStudentRegistrationNumber(mockStudent().getStudentRegistrationNumber());
+        Collaborator COLLABORATOR = collaboratorService.findByCollaboratorRegistrationNumber(mockCollaborator().getCollaboratorRegistrationNumber());
 
-        assertEquals(mockStudent().getStudentRegistrationNumber(), COLLABORATOR.getStudentRegistrationNumber());
+        assertEquals(mockCollaborator().getCollaboratorRegistrationNumber(), COLLABORATOR.getCollaboratorRegistrationNumber());
     }
 
     @Test
-    public void shouldDeleteStudentSuccessfully() {
+    public void shouldDeleteCollaboratorSuccessfully() {
 
-        ResponseEntity<String> response = collaboratorService.deleteStudentByStudentRegistrationNumber(mockStudent().getStudentRegistrationNumber());
+        ResponseEntity<String> response = collaboratorService.deleteCollaboratorByRegistrationNumber(mockCollaborator().getCollaboratorRegistrationNumber());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
-    private Collaborator mockStudent() {
+    private Collaborator mockCollaborator() {
         return new Collaborator(333000, "Collaborator Name");
     }
 }

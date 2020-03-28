@@ -40,23 +40,23 @@ public class ContactServiceIntegrationTest {
     private ContactRepository contactRepository;
 
     @Before
-    @Transactional("transactionManager")
+    @Transactional("contactManager")
     public void setUp() {
 
-        Contact contact = mockTransaction();
+        Contact contact = mockContact();
 
-        collaboratorRepository.save(contact.getCOLLABORATOR());
+        collaboratorRepository.save(contact.getCollaborator());
         contactRepository.save(contact);
     }
 
     @Test
     public void shouldAddTransactionSuccessfully() {
         Contact contact = new Contact(
-                2000,
-                mockStudent(),
-                333000,
-                "4532",
-                1.00,
+                new Collaborator(123, ""),
+                123,
+                "1",
+                "52",
+                "444224142",
                 "Contact description"
         );
         ResponseEntity<String> response = contactService.add(contact);
@@ -66,7 +66,7 @@ public class ContactServiceIntegrationTest {
 
     @Test
     public void shouldThrowExceptionForTransactionAlreadyExist() {
-        ResponseEntity<String> response = contactService.add(mockTransaction());
+        ResponseEntity<String> response = contactService.add(mockContact());
 
         assertTrue(response.getStatusCode().is4xxClientError());
         assertTrue(response.getBody().contains("Contact ID already exist"));
@@ -75,11 +75,11 @@ public class ContactServiceIntegrationTest {
     @Test
     public void shouldThrowExceptionForNonStudent() {
         Contact contact = new Contact(
-                1000,
-                new Collaborator(222000, "Name 3"),
-                222000,
-                "4532",
-                1.00,
+                new Collaborator(123, ""),
+                123,
+                "1",
+                "52",
+                "444224142",
                 "Contact description"
         );
 
@@ -91,29 +91,29 @@ public class ContactServiceIntegrationTest {
 
     @Test
     public void shouldFindAllTransactionsFromStudent() {
-        ResponseEntity<List<Contact>> response = contactService.findAllTransactionsFromStudent(mockTransaction().getStudentRegistrationNumber());
+        ResponseEntity<List<Contact>> response = contactService.findAllContactsFromCollaborator(mockContact().getCollaboratorId());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
     public void shouldDeleteTheTransaction() {
-        ResponseEntity<String> response = contactService.deleteTransactionById(mockTransaction().getTransactionId());
+        ResponseEntity<String> response = contactService.deleteContactById(mockContact().getContactId());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
-    private Collaborator mockStudent() {
+    private Collaborator mockCollaborator() {
         return new Collaborator(333000, "Collaborator Name");
     }
 
-    private Contact mockTransaction() {
+    private Contact mockContact() {
         return new Contact(
-                1000,
-                mockStudent(),
-                333000,
-                "4532",
-                1.00,
+                new Collaborator(123, ""),
+                123,
+                "1",
+                "52",
+                "444224142",
                 "Contact description"
         );
     }
