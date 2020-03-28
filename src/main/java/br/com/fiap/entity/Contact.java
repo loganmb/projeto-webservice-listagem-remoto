@@ -14,10 +14,26 @@ public class Contact implements Serializable {
 
     public Contact() {
     }
-    
+
+
+    public Contact(Collaborator collaborator, Integer collaboratorId, @NotNull String DDI,
+                   @NotNull String DDD, @NotNull String phoneNumber, String description) {
+
+        this.collaborator = collaborator;
+        this.collaboratorId = collaboratorId;
+        this.DDI = DDI;
+        this.DDD = DDD;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+    }
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    long id;
 
     @Id
     @Column(name = "CONTACT_ID", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("contact_id")
     @NotNull
     @ApiModelProperty(value = "Contact identification")

@@ -36,15 +36,16 @@ public class ContactRepositoryIntegrationTest {
     ContactRepository contactRepository;
 
     @Before
-    @Transactional("transactionTransactionManager")
-    public void insertTransactions() {
+    @Transactional("contactManager")
+    public void insertContacts() {
 
         List<Collaborator> Collaborators = new ArrayList<>();
         List<Contact> contacts = new ArrayList<>();
-        for (int studentIndex = 1; studentIndex < 6; studentIndex++) {
-            Collaborators.add(new Collaborator(studentIndex, "Name " + studentIndex));
-            for(int transactionIndex = 10; transactionIndex < 21; transactionIndex = transactionIndex + 10 ) {
-                contacts.add(new Contact(transactionIndex + studentIndex, Collaborators.get(studentIndex-1), Collaborators.get(studentIndex-1).getStudentRegistrationNumber(), "123" + transactionIndex, 0.99 + transactionIndex, "transaction " + transactionIndex + studentIndex));
+        for (int collaboratorIndex = 1; collaboratorIndex < 6; collaboratorIndex++) {
+            Collaborators.add(new Collaborator(collaboratorIndex, "Name " + collaboratorIndex));
+            for(int contactIndex = 10; contactIndex < 21; contactIndex = contactIndex + 10 ) {
+                contacts.add(new Contact(Collaborators.get(collaboratorIndex -1), collaboratorIndex, "" + contactIndex,
+                        "" + contactIndex * 2, "9" + contactIndex * 30, ""));
             }
         }
         collaboratorRepository.saveAll(Collaborators);
@@ -54,17 +55,18 @@ public class ContactRepositoryIntegrationTest {
     @Test
     @Transactional
     public void shouldFindAllTransactionsFromStudent() {
-        List<Contact> contacts = contactRepository.findAllTransactionsFromStudent(new Collaborator(1, "Name 1"));
+        List<Contact> contacts = contactRepository.findAllContactsFromCollaborator(
+                new Collaborator(1, "Name 1"));
 
-        assertTrue(contacts.get(0).getTransactionId() == 11);
-        assertTrue(contacts.get(1).getTransactionId() == 21);
+        assertTrue(contacts.get(0).getContactId() == 11);
+        assertTrue(contacts.get(1).getContactId() == 21);
     }
 
     @Test
     @Transactional
     public void shouldFindTransactionByTransactionId() {
-        Contact contact = contactRepository.findTransactionByTransactionId(11);
+        Contact contact = contactRepository.findContactById(11);
 
-        assertTrue(contact.getTransactionId() == 11);
+        assertTrue(contact.getContactId() == 11);
     }
 }

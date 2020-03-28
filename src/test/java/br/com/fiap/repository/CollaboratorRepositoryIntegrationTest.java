@@ -31,8 +31,8 @@ public class CollaboratorRepositoryIntegrationTest {
     CollaboratorRepository collaboratorRepository;
 
     @Before
-    @Transactional("studentTransactionManager")
-    public void insertStudents() {
+    @Transactional("collaboratorTransactionManager")
+    public void insertCollaborators() {
 
         List<Collaborator> Collaborators = new ArrayList<>();
         for (int index = 1; index < 6; index++) {
@@ -43,7 +43,7 @@ public class CollaboratorRepositoryIntegrationTest {
 
     @Test
     @Transactional
-    public void shouldFindStudentByName() {
+    public void shouldFindCollaboratorByName() {
         List<Collaborator> Collaborators = collaboratorRepository.findByName("Name 1");
 
         assertEquals(1, Collaborators.size());
@@ -52,11 +52,11 @@ public class CollaboratorRepositoryIntegrationTest {
 
     @Test
     @Transactional
-    public void shouldFindByStudentRegistrationNumber() {
-        Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(1);
+    public void shouldFindByCollaboratorRegistrationNumber() {
+        Collaborator collaborator = collaboratorRepository.findByCollaboratorRegistrationNumber(1);
 
-        assertTrue(COLLABORATOR.getStudentRegistrationNumber() == 1);
-        assertEquals("Name 1", COLLABORATOR.getName());
+        assertTrue(collaborator.getCollaboratorRegistrationNumber() == 1);
+        assertEquals("Name 1", collaborator.getName());
     }
 
 }
