@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "c24052db-e739-4007-a5fc-afe5f7d8fe16",
+		"name": "Projeto Spring FIAP 2020",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Alunos",
+			"item": [
+				{
+					"name": "GET - Busca Aluno Matricula",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/studentRegistrationNumber/13",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"studentRegistrationNumber",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Busca Aluno Nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/name/joNAs",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"name",
+								"joNAs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Busca Todos Alunos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/all",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Adiciona Aluno",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"student_registration_number\": \"13\",\n\t\"name\": \"jonas da silva\"\n}"
+						},
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/add",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Adiciona Alunos CSV",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/load_from_csv",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"load_from_csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH - Atualiza Aluno",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"jonas doidao debas\"\n}"
+						},
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/update/12",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"update",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - Exclui aluno por matricula",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/student/delete/12",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"student",
+								"delete",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Transações",
+			"item": [
+				{
+					"name": "POST - Adiciona transação",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transaction_id\": 4,\n    \"student_registration_number\": 3095564,\n    \"pan_final\": \"2123\",\n    \"amount\": 21.13,\n    \"description\": \"Transação teste\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/transaction/add",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"transaction",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Busca todas as transações por aluno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url.api}}/processor-app/api/transaction/student/3095564",
+							"host": [
+								"{{url.api}}"
+							],
+							"path": [
+								"processor-app",
+								"api",
+								"transaction",
+								"student",
+								"3095564"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
