@@ -115,7 +115,7 @@ public class CollaboratorService {
 
             Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
 
-            collaboratorRepository.deleteById(COLLABORATOR.getStudentRegistrationNumber());
+            collaboratorRepository.deleteById(COLLABORATOR.getCollaboratorRegistrationNumber());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());

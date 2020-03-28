@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/student")
-public class StudentController {
+public class CollaboratorController {
 
     @Autowired
     private CollaboratorService collaboratorService;
