@@ -16,6 +16,6 @@ public interface ContactRepository extends CrudRepository<Contact, Integer> {
     @Query("SELECT t FROM Contact t WHERE t.collaborator = :CollaboratorRegistrationNumber")
     public List<Contact> findAllContactsFromCollaborator(@Param("CollaboratorRegistrationNumber") Collaborator CollaboratorRegistrationNumber);
 
-    @Query("SELECT t FROM Contact t WHERE t.transactionId = :transactionId")
-    public Contact findContactByContactId(@Param("transactionId") Integer transactionId);
+    @Query("SELECT t FROM Contact t WHERE t.contactId = :contactId")
+    public Contact findContactById(@Param("contactId") Integer contactId);
 }
