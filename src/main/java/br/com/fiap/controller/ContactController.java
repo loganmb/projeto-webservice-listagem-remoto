@@ -45,7 +45,7 @@ public class ContactController {
 
     @RequestMapping(path = "/{contactId}", method = RequestMethod.DELETE, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Delete the contact by transaction ID")
+    @ApiOperation(value = "Delete the contact by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Delete the contact"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
