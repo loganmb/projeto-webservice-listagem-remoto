@@ -51,7 +51,7 @@ public class ContactController {
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> deleteTransactionById(@PathVariable("contactId") Integer contactId) {
-        return contactService.deleteTransactionById(contactId);
+    public ResponseEntity<String> deleteContactById(@PathVariable("contactId") Integer contactId) {
+        return contactService.deleteContactById(contactId);
     }
 }
