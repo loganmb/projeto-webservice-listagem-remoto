@@ -13,25 +13,25 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contact")
+@RequestMapping("/collaborator")
 public class ContactController {
 
     @Autowired
     private ContactService contactService;
 
-    @RequestMapping(path = "/add", method = RequestMethod.POST, produces="application/json", consumes="application/json")
+    @RequestMapping(path = "{collaboratorRegistrationNumber}/contact", method = RequestMethod.POST, produces="application/json", consumes="application/json")
     @ResponseBody
-    @ApiOperation(value = "Create new contact for the collaborator")
+    @ApiOperation(value = "Create collaborator profile")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Add new contact"),
-            @ApiResponse(code = 400, message = "Some field have wrong information"),
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 400, message = "Please, check check all"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
     public ResponseEntity<String> add(@Valid @RequestBody Contact contact) {
         return contactService.add(contact);
     }
 
-    @RequestMapping(path = "/collaborator/{collaboratorRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(path = "{collaboratorRegistrationNumber}/contact", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     @ApiOperation(value = "Find all contacts by collaborator registration number")
     @ApiResponses(value = {
@@ -43,7 +43,7 @@ public class ContactController {
         return contactService.findAllContactsFromCollaborator(collaboratorRegistrationNumber);
     }
 
-    @RequestMapping(path = "/{contactId}", method = RequestMethod.DELETE, produces="application/json")
+    @RequestMapping(path = "{collaboratorRegistrationNumber}/contact/{contactId}", method = RequestMethod.DELETE, produces="application/json")
     @ResponseBody
     @ApiOperation(value = "Delete the contact by ID")
     @ApiResponses(value = {

@@ -33,7 +33,6 @@ public class CollaboratorController {
 
     @RequestMapping(path = "/{collaboratorRegistrationNumber}", method = RequestMethod.PATCH, produces="application/json", consumes="application/json")
     @ResponseBody
-
     @ApiOperation(value = "Update the collaborator")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Update the collaborator"),
@@ -83,7 +82,7 @@ public class CollaboratorController {
     }
 
 
-    @RequestMapping(value = "/collaboratorRegistrationNumber/{collaboratorRegistrationNumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "/collaborator_id/{collaboratorRegistrationNumber}", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "Search for collaborator by registration number")
     @ApiResponses(value = {
