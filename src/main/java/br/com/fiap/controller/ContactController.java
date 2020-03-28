@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contact")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ContactController {
 
     @Autowired
