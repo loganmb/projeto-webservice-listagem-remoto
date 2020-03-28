@@ -1,11 +1,9 @@
 package br.com.fiap.service;
 
-import br.com.fiap.ProcessorApplication;
+import br.com.fiap.ContactApplication;
 import br.com.fiap.config.ProcessorMySqlContainer;
 import br.com.fiap.entity.Student;
-import br.com.fiap.entity.Transaction;
 import br.com.fiap.repository.StudentRepository;
-import br.com.fiap.repository.TransactionRepository;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -24,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProcessorApplication.class)
+@SpringBootTest(classes = ContactApplication.class)
 @ActiveProfiles({"integrationTest"})
 public class StudentServiceIntegrationTest {
 
@@ -44,6 +42,14 @@ public class StudentServiceIntegrationTest {
     }
 
     @Test
+    public void shouldGetAllStudentsSuccessfully() {
+
+        List<Student> students = (List<Student>) studentService.getAllStudents();
+
+        assertTrue(students.size() == 2);
+    }
+
+    @Test
     public void shouldAddStudentSuccessfully() {
 
         ResponseEntity<String> response = studentService.add(new Student(111000, "New Student Name"));
@@ -60,14 +66,6 @@ public class StudentServiceIntegrationTest {
         ), mockStudent().getStudentRegistrationNumber());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
-    }
-
-    @Test
-    public void shouldGetAllStudentsSuccessfully() {
-
-        List<Student> students = (List<Student>) studentService.getAllStudents();
-
-        assertTrue(students.size() == 1);
     }
 
     @Test

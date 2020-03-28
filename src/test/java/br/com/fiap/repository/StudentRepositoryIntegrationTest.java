@@ -1,6 +1,6 @@
 package br.com.fiap.repository;
 
-import br.com.fiap.ProcessorApplication;
+import br.com.fiap.ContactApplication;
 import br.com.fiap.config.ProcessorMySqlContainer;
 import br.com.fiap.entity.Student;
 import org.junit.Before;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProcessorApplication.class)
+@SpringBootTest(classes = ContactApplication.class)
 @ActiveProfiles({"integrationTest"})
 public class StudentRepositoryIntegrationTest {
 
