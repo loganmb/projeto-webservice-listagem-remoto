@@ -5,7 +5,7 @@ import br.com.fiap.config.ProcessorMySqlContainer;
 import br.com.fiap.entity.Collaborator;
 import br.com.fiap.entity.Contact;
 import br.com.fiap.repository.CollaboratorRepository;
-import br.com.fiap.repository.TransactionRepository;
+import br.com.fiap.repository.ContactRepository;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class ContactServiceIntegrationTest {
     private CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ContactRepository contactRepository;
 
     @Before
     @Transactional("transactionManager")
@@ -46,7 +46,7 @@ public class ContactServiceIntegrationTest {
         Contact contact = mockTransaction();
 
         collaboratorRepository.save(contact.getCOLLABORATOR());
-        transactionRepository.save(contact);
+        contactRepository.save(contact);
     }
 
     @Test

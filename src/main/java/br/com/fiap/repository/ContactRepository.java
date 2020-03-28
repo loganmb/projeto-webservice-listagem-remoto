@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TransactionRepository extends CrudRepository<Contact, Integer> {
+public interface ContactRepository extends CrudRepository<Contact, Integer> {
 
     @Query("SELECT t FROM Contact t WHERE t.collaborator = :CollaboratorRegistrationNumber")
-    public List<Contact> findAllTransactionsFromCollaborator(@Param("CollaboratorRegistrationNumber") Collaborator CollaboratorRegistrationNumber);
+    public List<Contact> findAllContactsFromCollaborator(@Param("CollaboratorRegistrationNumber") Collaborator CollaboratorRegistrationNumber);
 
     @Query("SELECT t FROM Contact t WHERE t.transactionId = :transactionId")
     public Contact findTransactionByTransactionId(@Param("transactionId") Integer transactionId);

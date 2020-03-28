@@ -3,7 +3,7 @@ package br.com.fiap.service;
 import br.com.fiap.entity.Collaborator;
 import br.com.fiap.entity.Contact;
 import br.com.fiap.repository.CollaboratorRepository;
-import br.com.fiap.repository.TransactionRepository;
+import br.com.fiap.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class TransactionService {
     private CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ContactRepository contactRepository;
 
     @Transactional
     public ResponseEntity<String> add(Contact contact) {
@@ -36,10 +36,10 @@ public class TransactionService {
             if (contact.getCollaborator() == null)
                 throw new Exception("\"Collaborator registration number not found\"");
 
-            if (transactionRepository.existsById(contact.getContactId()))
+            if (contactRepository.existsById(contact.getContactId()))
                 throw new Exception("\"Contact ID already exist\"");
 
-            transactionRepository.save(contact);
+            contactRepository.save(contact);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
@@ -76,9 +76,9 @@ public class TransactionService {
 
         try {
 
-            Contact contact = transactionRepository.findTransactionByTransactionId(transactionId);
+            Contact contact = contactRepository.findTransactionByTransactionId(transactionId);
 
-            transactionRepository.deleteById(contact.getContactId());
+            contactRepository.deleteById(contact.getContactId());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());

@@ -1,8 +1,5 @@
 package br.com.fiap.service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.entity.Collaborator;
@@ -23,15 +20,15 @@ public class CollaboratorService {
     private CollaboratorRepository collaboratorRepository;
 
     @Transactional
-    public ResponseEntity<String> add(Collaborator COLLABORATOR) {
+    public ResponseEntity<String> add(Collaborator collaborator) {
 
         try {
-            COLLABORATOR.setName(NameFormatter.capitalizeName(COLLABORATOR.getName()));
-            collaboratorRepository.save(COLLABORATOR);
+            collaborator.setName(NameFormatter.capitalizeName(collaborator.getName()));
+            collaboratorRepository.save(collaborator);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added the Collaborator successfully\"}";
+            String body = "{\"message\":\"Added the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -43,44 +40,10 @@ public class CollaboratorService {
             return new ResponseEntity<>(body, headers, HttpStatus.BAD_REQUEST);
         }
 
-    }
-
-    @Transactional()
-    public ResponseEntity<String> loadFromCsv() {
-
-        List<Collaborator> Collaborators = new ArrayList<>();
-
-        try {
-
-            BufferedReader csvReader = new BufferedReader(new FileReader("./files/lista_alunos.csv"));
-            String row;
-            while ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(";");
-                Collaborator COLLABORATOR = new Collaborator(Integer.parseInt(data[1]), NameFormatter.capitalizeName(data[0]));
-
-                Collaborators.add(COLLABORATOR);
-            }
-            csvReader.close();
-
-            collaboratorRepository.saveAll(Collaborators);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added all the Collaborators successfully\"}";
-
-            return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
-
-        } catch (Exception e) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"An error has occurred\", \"exception\":" + e.getMessage() + "}";
-
-            return new ResponseEntity<>(body, headers, HttpStatus.BAD_REQUEST);
-        }
     }
 
     @Transactional
-    public ResponseEntity<String> updateCollaboratorByCollaboratorRegistrationNumber(Collaborator CollaboratorUpdate, Integer CollaboratorRegistrationNumber) {
+    public ResponseEntity<String> updateCollaboratorByRegistrationNumber(Collaborator CollaboratorUpdate, Integer CollaboratorRegistrationNumber) {
 
         try {
 
@@ -94,7 +57,7 @@ public class CollaboratorService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Updated the Collaborator successfully\"}";
+            String body = "{\"message\":\"Updated the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -109,7 +72,7 @@ public class CollaboratorService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteCollaboratorByCollaboratorRegistrationNumber(Integer CollaboratorRegistrationNumber) {
+    public ResponseEntity<String> deleteCollaboratorByRegistrationNumber(Integer CollaboratorRegistrationNumber) {
 
         try {
 
@@ -119,7 +82,7 @@ public class CollaboratorService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Deleted the Collaborator successfully\"}";
+            String body = "{\"message\":\"Deleted the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 

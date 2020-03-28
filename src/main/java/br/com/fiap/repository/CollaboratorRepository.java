@@ -15,6 +15,6 @@ public interface CollaboratorRepository extends CrudRepository<Collaborator, Int
 	public List<Collaborator> findByName(@Param("name") String name);
 	
 	@Query("SELECT s FROM Collaborator s WHERE s.collaboratorRegistrationNumber = :collaboratorRegistrationNumber")
-	public Collaborator findByCollaboratorRegistrationNumber(@Param("collaboratoregistrationNumber") Integer collaboratorRegistrationNumber);
+	public Collaborator findByCollaboratorRegistrationNumber(@Param("collaboratorRegistrationNumber") Integer collaboratorRegistrationNumber);
 	
 }

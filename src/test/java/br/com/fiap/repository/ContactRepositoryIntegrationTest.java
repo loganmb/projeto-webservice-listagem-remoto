@@ -33,7 +33,7 @@ public class ContactRepositoryIntegrationTest {
     CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    TransactionRepository transactionRepository;
+    ContactRepository contactRepository;
 
     @Before
     @Transactional("transactionTransactionManager")
@@ -48,13 +48,13 @@ public class ContactRepositoryIntegrationTest {
             }
         }
         collaboratorRepository.saveAll(Collaborators);
-        transactionRepository.saveAll(contacts);
+        contactRepository.saveAll(contacts);
     }
 
     @Test
     @Transactional
     public void shouldFindAllTransactionsFromStudent() {
-        List<Contact> contacts = transactionRepository.findAllTransactionsFromStudent(new Collaborator(1, "Name 1"));
+        List<Contact> contacts = contactRepository.findAllTransactionsFromStudent(new Collaborator(1, "Name 1"));
 
         assertTrue(contacts.get(0).getTransactionId() == 11);
         assertTrue(contacts.get(1).getTransactionId() == 21);
@@ -63,7 +63,7 @@ public class ContactRepositoryIntegrationTest {
     @Test
     @Transactional
     public void shouldFindTransactionByTransactionId() {
-        Contact contact = transactionRepository.findTransactionByTransactionId(11);
+        Contact contact = contactRepository.findTransactionByTransactionId(11);
 
         assertTrue(contact.getTransactionId() == 11);
     }

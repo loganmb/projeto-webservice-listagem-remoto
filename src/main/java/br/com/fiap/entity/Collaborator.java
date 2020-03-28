@@ -1,5 +1,6 @@
 package br.com.fiap.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Collaborator", uniqueConstraints = {@UniqueConstraint(columnNames = "PERSONAL_REGISTRATION_NUMBER")})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Collaborator implements Serializable {
 
     public Collaborator(){}
@@ -21,7 +23,7 @@ public class Collaborator implements Serializable {
 
     @Id
     @Column(name = "COLLABORATOR_ID", unique = true, nullable = false)
-    @JsonProperty("http://www.mocky.io/v2/5e7f5c7a2f00008700bac2f7")
+    @JsonProperty("collaborator_registration_number")
     @NotNull
     @ApiModelProperty(value = "Institution's registration number")
     private Integer collaboratorRegistrationNumber;
