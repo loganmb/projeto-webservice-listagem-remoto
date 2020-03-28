@@ -23,11 +23,11 @@ public class CollaboratorService {
     private CollaboratorRepository collaboratorRepository;
 
     @Transactional
-    public ResponseEntity<String> add(Collaborator COLLABORATOR) {
+    public ResponseEntity<String> add(Collaborator collaborator) {
 
         try {
-            COLLABORATOR.setName(NameFormatter.capitalizeName(COLLABORATOR.getName()));
-            collaboratorRepository.save(COLLABORATOR);
+            collaborator.setName(NameFormatter.capitalizeName(collaborator.getName()));
+            collaboratorRepository.save(collaborator);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
