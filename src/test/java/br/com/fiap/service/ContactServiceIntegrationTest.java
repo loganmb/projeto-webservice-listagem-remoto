@@ -5,7 +5,7 @@ import br.com.fiap.config.ProcessorMySqlContainer;
 import br.com.fiap.entity.Collaborator;
 import br.com.fiap.entity.Contact;
 import br.com.fiap.repository.CollaboratorRepository;
-import br.com.fiap.repository.TransactionRepository;
+import br.com.fiap.repository.ContactRepository;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -31,13 +31,13 @@ public class ContactServiceIntegrationTest {
     public static MySQLContainer processorMySqlContainer = ProcessorMySqlContainer.getInstance();
 
     @Autowired
-    private TransactionService transactionService;
+    private ContactService contactService;
 
     @Autowired
     private CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ContactRepository contactRepository;
 
     @Before
     @Transactional("transactionManager")
@@ -46,7 +46,7 @@ public class ContactServiceIntegrationTest {
         Contact contact = mockTransaction();
 
         collaboratorRepository.save(contact.getCOLLABORATOR());
-        transactionRepository.save(contact);
+        contactRepository.save(contact);
     }
 
     @Test
@@ -59,14 +59,14 @@ public class ContactServiceIntegrationTest {
                 1.00,
                 "Contact description"
         );
-        ResponseEntity<String> response = transactionService.add(contact);
+        ResponseEntity<String> response = contactService.add(contact);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
     public void shouldThrowExceptionForTransactionAlreadyExist() {
-        ResponseEntity<String> response = transactionService.add(mockTransaction());
+        ResponseEntity<String> response = contactService.add(mockTransaction());
 
         assertTrue(response.getStatusCode().is4xxClientError());
         assertTrue(response.getBody().contains("Contact ID already exist"));
@@ -83,7 +83,7 @@ public class ContactServiceIntegrationTest {
                 "Contact description"
         );
 
-        ResponseEntity<String> response = transactionService.add(contact);
+        ResponseEntity<String> response = contactService.add(contact);
 
         assertTrue(response.getStatusCode().is4xxClientError());
         assertTrue(response.getBody().contains("Collaborator registration number not found"));
@@ -91,14 +91,14 @@ public class ContactServiceIntegrationTest {
 
     @Test
     public void shouldFindAllTransactionsFromStudent() {
-        ResponseEntity<List<Contact>> response = transactionService.findAllTransactionsFromStudent(mockTransaction().getStudentRegistrationNumber());
+        ResponseEntity<List<Contact>> response = contactService.findAllTransactionsFromStudent(mockTransaction().getStudentRegistrationNumber());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
     @Test
     public void shouldDeleteTheTransaction() {
-        ResponseEntity<String> response = transactionService.deleteTransactionById(mockTransaction().getTransactionId());
+        ResponseEntity<String> response = contactService.deleteTransactionById(mockTransaction().getTransactionId());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }

@@ -3,7 +3,7 @@ package br.com.fiap.service;
 import br.com.fiap.entity.Collaborator;
 import br.com.fiap.entity.Contact;
 import br.com.fiap.repository.CollaboratorRepository;
-import br.com.fiap.repository.TransactionRepository;
+import br.com.fiap.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Service
-@RequestMapping("/transaction")
-public class TransactionService {
+@RequestMapping("/contact")
+public class ContactService {
 
     @Autowired
     private CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ContactRepository contactRepository;
 
     @Transactional
     public ResponseEntity<String> add(Contact contact) {
@@ -31,15 +31,15 @@ public class TransactionService {
             if (contact.getCollaboratorId() == null)
                 throw new Exception("\"Collaborator registration number is required\"");
 
-            contact.setCollaborator(collaboratorRepository.findByStudentRegistrationNumber(contact.getCollaboratorId()));
+            contact.setCollaborator(collaboratorRepository.findByCollaboratorRegistrationNumber(contact.getCollaboratorId()));
 
             if (contact.getCollaborator() == null)
                 throw new Exception("\"Collaborator registration number not found\"");
 
-            if (transactionRepository.existsById(contact.getContactId()))
+            if (contactRepository.existsById(contact.getContactId()))
                 throw new Exception("\"Contact ID already exist\"");
 
-            transactionRepository.save(contact);
+            contactRepository.save(contact);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
@@ -57,11 +57,11 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(Integer studentRegistrationNumber) {
+    public ResponseEntity<List<Contact>> findAllContactsFromCollaborator(Integer studentRegistrationNumber) {
 
-        Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+        Collaborator COLLABORATOR = collaboratorRepository.findByCollaboratorRegistrationNumber(studentRegistrationNumber);
 
-        List<Contact> contacts = transactionRepository.findAllTransactionsFromStudent(COLLABORATOR);
+        List<Contact> contacts = contactRepository.findAllContactsFromCollaborator(COLLABORATOR);
 
         contacts.forEach(contact -> contact.setCollaboratorId(contact.getCollaborator().getCollaboratorRegistrationNumber()));
 
@@ -72,13 +72,13 @@ public class TransactionService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteTransactionById(Integer transactionId) {
+    public ResponseEntity<String> deleteContactById(Integer contactId) {
 
         try {
 
-            Contact contact = transactionRepository.findTransactionByTransactionId(transactionId);
+            Contact contact = contactRepository.findContactByContactId(contactId);
 
-            transactionRepository.deleteById(contact.getContactId());
+            contactRepository.deleteById(contact.getContactId());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());

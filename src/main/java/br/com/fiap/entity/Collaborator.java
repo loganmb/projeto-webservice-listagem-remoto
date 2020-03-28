@@ -21,8 +21,7 @@ public class Collaborator implements Serializable {
 
     @Id
     @Column(name = "COLLABORATOR_ID", unique = true, nullable = false)
-    @JsonProperty("http://www.mocky.io/v2/5e7f5c7a2f00008700bac2f7")
-    @NotNull
+    @JsonProperty("collaborator_id")
     @ApiModelProperty(value = "Institution's registration number")
     private Integer collaboratorRegistrationNumber;
 

@@ -1,7 +1,7 @@
 package br.com.fiap.controller;
 
 import br.com.fiap.entity.Contact;
-import br.com.fiap.service.TransactionService;
+import br.com.fiap.service.ContactService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,7 +17,7 @@ import java.util.List;
 public class TransactionController {
 
     @Autowired
-    private TransactionService transactionService;
+    private ContactService contactService;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces="application/json", consumes="application/json")
     @ResponseBody
@@ -28,7 +28,7 @@ public class TransactionController {
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
     public ResponseEntity<String> add(@Valid @RequestBody Contact contact) {
-        return transactionService.add(contact);
+        return contactService.add(contact);
     }
 
     @RequestMapping(path = "/student/{studentRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
@@ -40,7 +40,7 @@ public class TransactionController {
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
     public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(@PathVariable Integer studentRegistrationNumber) {
-        return transactionService.findAllTransactionsFromStudent(studentRegistrationNumber);
+        return contactService.findAllTransactionsFromStudent(studentRegistrationNumber);
     }
 
     @RequestMapping(path = "/{transactionId}", method = RequestMethod.DELETE, produces="application/json")
@@ -52,6 +52,6 @@ public class TransactionController {
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
     public ResponseEntity<String> deleteTransactionById(@PathVariable Integer transactionId) {
-        return transactionService.deleteTransactionById(transactionId);
+        return contactService.deleteTransactionById(transactionId);
     }
 }
