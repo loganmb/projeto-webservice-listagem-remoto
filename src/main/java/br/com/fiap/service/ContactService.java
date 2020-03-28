@@ -63,6 +63,7 @@ public class ContactService {
 
         List<Contact> contacts = contactRepository.findAllContactsFromCollaborator(COLLABORATOR);
 
+
         contacts.forEach(contact -> contact.setCollaboratorId(contact.getCollaborator().getCollaboratorRegistrationNumber()));
 
         HttpHeaders headers = new HttpHeaders();

@@ -21,7 +21,7 @@ public class TransactionController {
 
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces="application/json", consumes="application/json")
     @ResponseBody
-    @ApiOperation(value = "Create new contact for the student")
+    @ApiOperation(value = "Create new contact for the Collaborator")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Add new contact"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
@@ -31,16 +31,21 @@ public class TransactionController {
         return contactService.add(contact);
     }
 
-    @RequestMapping(path = "/student/{studentRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(path = "/Collaborator/{CollaboratorRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Find all transactions by student registration number")
+    @ApiOperation(value = "Find all transactions by Collaborator registration number")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Get all transactions from the student"),
+            @ApiResponse(code = 200, message = "Get all transactions from the Collaborator"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
+<<<<<<< HEAD
     public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(@PathVariable Integer studentRegistrationNumber) {
         return contactService.findAllTransactionsFromStudent(studentRegistrationNumber);
+=======
+    public ResponseEntity<List<Contact>> findAllTransactionsFromCollaborator(@PathVariable Integer CollaboratorRegistrationNumber) {
+        return transactionService.findAllTransactionsFromCollaborator(CollaboratorRegistrationNumber);
+>>>>>>> 8d0c044dbaf1bf7239cfa69b92347bd0f054c5d5
     }
 
     @RequestMapping(path = "/{transactionId}", method = RequestMethod.DELETE, produces="application/json")
