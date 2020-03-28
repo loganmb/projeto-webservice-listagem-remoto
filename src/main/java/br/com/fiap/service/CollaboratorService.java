@@ -1,12 +1,9 @@
 package br.com.fiap.service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.entity.Student;
-import br.com.fiap.repository.StudentRepository;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.repository.CollaboratorRepository;
 import br.com.fiap.utils.NameFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,21 +14,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class StudentService {
+public class CollaboratorService {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private CollaboratorRepository collaboratorRepository;
 
     @Transactional
-    public ResponseEntity<String> add(Student student) {
+    public ResponseEntity<String> add(Collaborator collaborator) {
 
         try {
-            student.setName(NameFormatter.capitalizeName(student.getName()));
-            studentRepository.save(student);
+            collaborator.setName(NameFormatter.capitalizeName(collaborator.getName()));
+            collaboratorRepository.save(collaborator);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added the student successfully\"}";
+            String body = "{\"message\":\"Added the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -46,21 +43,23 @@ public class StudentService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateStudentByStudentRegistrationNumber(Student studentUpdate, Integer studentRegistrationNumber) {
+
+    public ResponseEntity<String> updateCollaboratorByRegistrationNumber(Collaborator CollaboratorUpdate, Integer CollaboratorRegistrationNumber) {
 
         try {
 
-            Student studentDatabase = studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator CollaboratorDatabase = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
-            studentDatabase.setName(studentUpdate.getName() == null || studentUpdate.getName().isEmpty()
-                    ? NameFormatter.capitalizeName(studentDatabase.getName())
-                    : NameFormatter.capitalizeName(studentUpdate.getName()));
 
-            studentRepository.save(studentDatabase);
+            CollaboratorDatabase.setName(CollaboratorUpdate.getName() == null || CollaboratorUpdate.getName().isEmpty()
+                    ? NameFormatter.capitalizeName(CollaboratorDatabase.getName())
+                    : NameFormatter.capitalizeName(CollaboratorUpdate.getName()));
+
+            collaboratorRepository.save(CollaboratorDatabase);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Updated the student successfully\"}";
+            String body = "{\"message\":\"Updated the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -75,17 +74,19 @@ public class StudentService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteStudentByStudentRegistrationNumber(Integer studentRegistrationNumber) {
+
+    public ResponseEntity<String> deleteCollaboratorByRegistrationNumber(Integer CollaboratorRegistrationNumber) {
 
         try {
 
-            Student student = studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator collaborator = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
-            studentRepository.deleteById(student.getStudentRegistrationNumber());
+
+            collaboratorRepository.deleteById(collaborator.getCollaboratorRegistrationNumber());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Deleted the student successfully\"}";
+            String body = "{\"message\":\"Deleted the collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -100,18 +101,19 @@ public class StudentService {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Iterable<Collaborator> getAllCollaborators() {
+        return collaboratorRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<Student> findByName(String name) {
-        return studentRepository.findByName(name);
+    public List<Collaborator> findByName(String name) {
+        return collaboratorRepository.findByName(name);
     }
 
     @Transactional(readOnly = true)
-    public Student findByStudentRegistrationNumber(Integer studentRegistrationNumber) {
-        return studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+    public Collaborator findByCollaboratorRegistrationNumber(Integer CollaboratorRegistrationNumber) {
+        return collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
+
     }
 
 }

@@ -2,7 +2,7 @@ package br.com.fiap.repository;
 
 import br.com.fiap.ContactApplication;
 import br.com.fiap.config.ProcessorMySqlContainer;
-import br.com.fiap.entity.Student;
+import br.com.fiap.entity.Collaborator;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -22,41 +22,41 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ContactApplication.class)
 @ActiveProfiles({"integrationTest"})
-public class StudentRepositoryIntegrationTest {
+public class CollaboratorRepositoryIntegrationTest {
 
     @ClassRule
     public static MySQLContainer processorMySqlContainer = ProcessorMySqlContainer.getInstance();
 
     @Autowired
-    StudentRepository studentRepository;
+    CollaboratorRepository collaboratorRepository;
 
     @Before
-    @Transactional("studentTransactionManager")
-    public void insertStudents() {
+    @Transactional("collaboratorContactManager")
+    public void insertCollaborators() {
 
-        List<Student> students = new ArrayList<>();
+        List<Collaborator> Collaborators = new ArrayList<>();
         for (int index = 1; index < 6; index++) {
-            students.add(new Student(index, "Name " + index));
+            Collaborators.add(new Collaborator(index, "Name " + index));
         }
-        studentRepository.saveAll(students);
+        collaboratorRepository.saveAll(Collaborators);
     }
 
     @Test
     @Transactional
-    public void shouldFindStudentByName() {
-        List<Student> students = studentRepository.findByName("Name 1");
+    public void shouldFindCollaboratorByName() {
+        List<Collaborator> Collaborators = collaboratorRepository.findByName("Name 1");
 
-        assertEquals(1, students.size());
-        assertEquals("Name 1", students.get(0).getName());
+        assertEquals(1, Collaborators.size());
+        assertEquals("Name 1", Collaborators.get(0).getName());
     }
 
     @Test
     @Transactional
-    public void shouldFindByStudentRegistrationNumber() {
-        Student student = studentRepository.findByStudentRegistrationNumber(1);
+    public void shouldFindByCollaboratorRegistrationNumber() {
+        Collaborator collaborator = collaboratorRepository.findByCollaboratorRegistrationNumber(1);
 
-        assertTrue(student.getStudentRegistrationNumber() == 1);
-        assertEquals("Name 1", student.getName());
+        assertTrue(collaborator.getCollaboratorRegistrationNumber() == 1);
+        assertEquals("Name 1", collaborator.getName());
     }
 
 }
