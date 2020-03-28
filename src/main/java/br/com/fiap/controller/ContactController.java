@@ -45,13 +45,13 @@ public class ContactController {
 
     @RequestMapping(path = "/{contactId}", method = RequestMethod.DELETE, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Delete the contact by transaction ID")
+    @ApiOperation(value = "Delete the contact by ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Delete the contact"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> deleteTransactionById(@PathVariable("contactId") Integer contactId) {
-        return contactService.deleteTransactionById(contactId);
+    public ResponseEntity<String> deleteContactById(@PathVariable("contactId") Integer contactId) {
+        return contactService.deleteContactById(contactId);
     }
 }
