@@ -1,6 +1,6 @@
-# processor-app
+# contact-app
 
-Gerenciador de cadastro de clientes e transações
+Gerenciador de cadastro de pessoa para identificar contatos de outras pessoas
 
 ## Execução local
 
