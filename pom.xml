@@ -8,11 +8,11 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.6.RELEASE</version>
     </parent>
-    <groupId>br.com.fiap.springframework</groupId>
+    <groupId>br.com.fiap.webservice</groupId>
     <artifactId>processor-app</artifactId>
     <version>1.0.0</version>
-    <name>processor-app</name>
-    <description>Gerenciador de cadastro de clientes e transações</description>
+    <name>contact-app</name>
+    <description>Gerenciador de cadastro de clientes para contatos</description>
 
     <dependencies>
         <dependency>

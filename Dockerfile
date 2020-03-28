@@ -23,4 +23,4 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 COPY files files
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-cp", "app:app/lib/*", "br.com.fiap.ProcessorApplication"]
+ENTRYPOINT ["java", "-cp", "app:app/lib/*", "br.com.fiap.ContactApplication"]
