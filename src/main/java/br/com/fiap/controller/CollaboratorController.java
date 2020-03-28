@@ -20,7 +20,7 @@ public class CollaboratorController {
     @Autowired
     private CollaboratorService collaboratorService;
 
-    @RequestMapping(path = "/add", method = RequestMethod.POST, produces="application/json", consumes="application/json")
+    @RequestMapping(method = RequestMethod.POST, produces="application/json", consumes="application/json")
     @ResponseBody
     @ApiOperation(value = "Create new Collaborator")
     @ApiResponses(value = {
