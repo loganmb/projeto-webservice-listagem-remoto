@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends CrudRepository<Contact, Integer> {
 
-
     @Query("SELECT t FROM Contact t WHERE t.collaborator = :CollaboratorRegistrationNumber")
     public List<Contact> findAllContactsFromCollaborator(@Param("CollaboratorRegistrationNumber") Collaborator CollaboratorRegistrationNumber);
 

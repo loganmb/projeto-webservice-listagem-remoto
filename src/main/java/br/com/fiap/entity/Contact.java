@@ -28,10 +28,6 @@ public class Contact implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    long id;
-
-    @Id
     @Column(name = "CONTACT_ID", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("contact_id")
