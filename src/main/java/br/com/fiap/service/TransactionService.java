@@ -31,7 +31,7 @@ public class TransactionService {
             if (contact.getCollaboratorId() == null)
                 throw new Exception("\"Collaborator registration number is required\"");
 
-            contact.setCollaborator(collaboratorRepository.findByStudentRegistrationNumber(contact.getCollaboratorId()));
+            contact.setCollaborator(collaboratorRepository.findByCollaboratorRegistrationNumber(contact.getCollaboratorId()));
 
             if (contact.getCollaborator() == null)
                 throw new Exception("\"Collaborator registration number not found\"");
@@ -57,11 +57,11 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(Integer studentRegistrationNumber) {
+    public ResponseEntity<List<Contact>> findAllTransactionsFromCollaborator(Integer CollaboratorRegistrationNumber) {
 
-        Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+        Collaborator COLLABORATOR = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
-        List<Contact> contacts = transactionRepository.findAllTransactionsFromStudent(COLLABORATOR);
+        List<Contact> contacts = transactionRepository.findAllTransactionsFromCollaborator(COLLABORATOR);
 
         contacts.forEach(contact -> contact.setCollaboratorId(contact.getCollaborator().getCollaboratorRegistrationNumber()));
 

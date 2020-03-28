@@ -80,11 +80,11 @@ public class CollaboratorService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateStudentByStudentRegistrationNumber(Collaborator CollaboratorUpdate, Integer studentRegistrationNumber) {
+    public ResponseEntity<String> updateCollaboratorByCollaboratorRegistrationNumber(Collaborator CollaboratorUpdate, Integer CollaboratorRegistrationNumber) {
 
         try {
 
-            Collaborator CollaboratorDatabase = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator CollaboratorDatabase = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
             CollaboratorDatabase.setName(CollaboratorUpdate.getName() == null || CollaboratorUpdate.getName().isEmpty()
                     ? NameFormatter.capitalizeName(CollaboratorDatabase.getName())
@@ -94,7 +94,7 @@ public class CollaboratorService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Updated the student successfully\"}";
+            String body = "{\"message\":\"Updated the Collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -109,11 +109,11 @@ public class CollaboratorService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteStudentByStudentRegistrationNumber(Integer studentRegistrationNumber) {
+    public ResponseEntity<String> deleteCollaboratorByCollaboratorRegistrationNumber(Integer CollaboratorRegistrationNumber) {
 
         try {
 
-            Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator COLLABORATOR = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
             collaboratorRepository.deleteById(COLLABORATOR.getCollaboratorRegistrationNumber());
 
@@ -134,7 +134,7 @@ public class CollaboratorService {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<Collaborator> getAllStudents() {
+    public Iterable<Collaborator> getAllCollaborators() {
         return collaboratorRepository.findAll();
     }
 
@@ -144,8 +144,8 @@ public class CollaboratorService {
     }
 
     @Transactional(readOnly = true)
-    public Collaborator findByStudentRegistrationNumber(Integer studentRegistrationNumber) {
-        return collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+    public Collaborator findByCollaboratorRegistrationNumber(Integer CollaboratorRegistrationNumber) {
+        return collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
     }
 
 }
