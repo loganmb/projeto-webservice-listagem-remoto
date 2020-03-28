@@ -13,8 +13,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/student")
-public class StudentController {
+@RequestMapping(path = "/collaborator")
+public class CollaboratorController {
 
     @Autowired
     private CollaboratorService collaboratorService;
@@ -27,15 +27,15 @@ public class StudentController {
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> add(@Valid @RequestBody Collaborator COLLABORATOR) {
-        return collaboratorService.add(COLLABORATOR);
+    public ResponseEntity<String> add(@Valid @RequestBody Collaborator collaborator) {
+        return collaboratorService.add(collaborator);
     }
 
     @RequestMapping(value = "/load_from_csv", method = RequestMethod.POST, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Create new students from CSV file")
+    @ApiOperation(value = "Create new collaborators from CSV file")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Add new students"),
+            @ApiResponse(code = 201, message = "Add new collaborators"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
@@ -43,48 +43,48 @@ public class StudentController {
         return collaboratorService.loadFromCsv();
     }
 
-    @RequestMapping(path = "/{studentRegistrationNumber}", method = RequestMethod.PATCH, produces="application/json", consumes="application/json")
+    @RequestMapping(path = "/{collaboratorRegistrationNumber}", method = RequestMethod.PATCH, produces="application/json", consumes="application/json")
     @ResponseBody
-    @ApiOperation(value = "Update the student")
+    @ApiOperation(value = "Update the collaborator")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Update the student"),
+            @ApiResponse(code = 200, message = "Update the collaborator"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> updateStudentByStudentRegistrationNumber(@RequestBody Collaborator CollaboratorUpdate,
-                                                                           @PathVariable("studentRegistrationNumber") Integer studentRegistrationNumber) {
-        return collaboratorService.updateStudentByStudentRegistrationNumber(CollaboratorUpdate,studentRegistrationNumber);
+    public ResponseEntity<String> updateCollaboratorByCollaboratorRegistrationNumber(@RequestBody Collaborator CollaboratorUpdate,
+                                                                           @PathVariable("collaboratorRegistrationNumber") Integer collaboratorRegistrationNumber) {
+        return collaboratorService.updateCollaboratorByCollaboratorRegistrationNumber(CollaboratorUpdate,collaboratorRegistrationNumber);
     }
 
-    @RequestMapping(path = "/{studentRegistrationNumber}", method = RequestMethod.DELETE, produces="application/json")
+    @RequestMapping(path = "/{collaboratorRegistrationNumber}", method = RequestMethod.DELETE, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Delete the student")
+    @ApiOperation(value = "Delete the collaborator")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Delete the student"),
+            @ApiResponse(code = 200, message = "Delete the collaborator"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> deleteStudentByStudentRegistrationNumber(@PathVariable Integer studentRegistrationNumber) {
-        return collaboratorService.deleteStudentByStudentRegistrationNumber(studentRegistrationNumber);
+    public ResponseEntity<String> deleteCollaboratorByCollaboratorRegistrationNumber(@PathVariable Integer collaboratorRegistrationNumber) {
+        return collaboratorService.deleteCollaboratorByCollaboratorRegistrationNumber(collaboratorRegistrationNumber);
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
-    @ApiOperation(value = "Get all registered students")
+    @ApiOperation(value = "Get all registered collaborators")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Get all registered students"),
+            @ApiResponse(code = 200, message = "Get all registered collaborators"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public Iterable<Collaborator> getAllStudents() {
-        return collaboratorService.getAllStudents();
+    public Iterable<Collaborator> getAllCollaborators() {
+        return collaboratorService.getAllCollaborators();
     }
 
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value = "Search for student by name")
+    @ApiOperation(value = "Search for collaborator by name")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Search for student by name"),
+            @ApiResponse(code = 200, message = "Search for collaborator by name"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
@@ -92,16 +92,16 @@ public class StudentController {
         return collaboratorService.findByName(name);
     }
 
-    @RequestMapping(value = "/studentRegistrationNumber/{studentRegistrationNumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "/collaboratorRegistrationNumber/{collaboratorId}", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation(value = "Search for student by registration number")
+    @ApiOperation(value = "Search for collaborator by registration number")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Search for student by registration number"),
+            @ApiResponse(code = 200, message = "Search for collaborator by registration number"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public Collaborator findByStudentRegistrationNumber(@PathVariable Integer studentRegistrationNumber) {
-        return collaboratorService.findByStudentRegistrationNumber(studentRegistrationNumber);
+    public Collaborator findByCollaboratorRegistrationNumber(@PathVariable Integer collaboratorRegistrationNumber) {
+        return collaboratorService.findByCollaboratorRegistrationNumber(collaboratorRegistrationNumber);
     }
 
 }
