@@ -31,7 +31,7 @@ public class ContactController {
         return contactService.add(contact);
     }
 
-    @RequestMapping(path = "/Collaborator/{collaboratorRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(path = "/collaborator/{collaboratorRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
     @ApiOperation(value = "Find all contacts by collaborator registration number")
     @ApiResponses(value = {

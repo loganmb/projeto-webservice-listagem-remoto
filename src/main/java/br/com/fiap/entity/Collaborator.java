@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Collaborator", uniqueConstraints = {@UniqueConstraint(columnNames = "PERSONAL_REGISTRATION_NUMBER")})
+@Table(name = "COLLABORATOR", uniqueConstraints = {@UniqueConstraint(columnNames = "PERSONAL_REGISTRATION_NUMBER")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Collaborator implements Serializable {
 
@@ -23,12 +23,8 @@ public class Collaborator implements Serializable {
 
     @Id
     @Column(name = "COLLABORATOR_ID", unique = true, nullable = false)
-<<<<<<< HEAD
-    @JsonProperty("collaborator_id")
-=======
     @JsonProperty("collaborator_registration_number")
     @NotNull
->>>>>>> 8d0c044dbaf1bf7239cfa69b92347bd0f054c5d5
     @ApiModelProperty(value = "Institution's registration number")
     private Integer collaboratorRegistrationNumber;
 
@@ -54,6 +50,7 @@ public class Collaborator implements Serializable {
     private String experience;
 
     @JsonProperty("contacts")
+    @Transient
     private List<Contact> contacts;
 
 
