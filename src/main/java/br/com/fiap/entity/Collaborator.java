@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "COLLABORATOR", uniqueConstraints = {@UniqueConstraint(columnNames = "PERSONAL_REGISTRATION_NUMBER")})
+@Table(name = "COLLABORATOR", uniqueConstraints = {@UniqueConstraint(columnNames = "COLLABORATOR_ID")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Collaborator implements Serializable {
 
