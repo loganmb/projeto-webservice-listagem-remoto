@@ -1,6 +1,6 @@
 package br.com.fiap.controller;
 
-import br.com.fiap.entity.Transaction;
+import br.com.fiap.entity.Contact;
 import br.com.fiap.service.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,14 +21,14 @@ public class TransactionController {
 
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces="application/json", consumes="application/json")
     @ResponseBody
-    @ApiOperation(value = "Create new transaction for the student")
+    @ApiOperation(value = "Create new contact for the student")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Add new transaction"),
+            @ApiResponse(code = 201, message = "Add new contact"),
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<String> add(@Valid @RequestBody Transaction transaction) {
-        return transactionService.add(transaction);
+    public ResponseEntity<String> add(@Valid @RequestBody Contact contact) {
+        return transactionService.add(contact);
     }
 
     @RequestMapping(path = "/student/{studentRegistrationNumber}", method = RequestMethod.GET, produces="application/json")
@@ -39,7 +39,7 @@ public class TransactionController {
             @ApiResponse(code = 400, message = "Some field have wrong information"),
             @ApiResponse(code = 500, message = "Some error occurred"),
     })
-    public ResponseEntity<List<Transaction>> findAllTransactionsFromStudent(@PathVariable Integer studentRegistrationNumber) {
+    public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(@PathVariable Integer studentRegistrationNumber) {
         return transactionService.findAllTransactionsFromStudent(studentRegistrationNumber);
     }
 

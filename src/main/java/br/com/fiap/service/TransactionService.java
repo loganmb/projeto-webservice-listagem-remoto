@@ -1,8 +1,8 @@
 package br.com.fiap.service;
 
-import br.com.fiap.entity.Student;
-import br.com.fiap.entity.Transaction;
-import br.com.fiap.repository.StudentRepository;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.entity.Contact;
+import br.com.fiap.repository.CollaboratorRepository;
 import br.com.fiap.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,30 +20,30 @@ import java.util.List;
 public class TransactionService {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private CollaboratorRepository collaboratorRepository;
 
     @Autowired
     private TransactionRepository transactionRepository;
 
     @Transactional
-    public ResponseEntity<String> add(Transaction transaction) {
+    public ResponseEntity<String> add(Contact contact) {
         try {
-            if (transaction.getStudentRegistrationNumber() == null)
-                throw new Exception("\"Student registration number is required\"");
+            if (contact.getCollaboratorId() == null)
+                throw new Exception("\"Collaborator registration number is required\"");
 
-            transaction.setStudent(studentRepository.findByStudentRegistrationNumber(transaction.getStudentRegistrationNumber()));
+            contact.setCollaborator(collaboratorRepository.findByStudentRegistrationNumber(contact.getCollaboratorId()));
 
-            if (transaction.getStudent() == null)
-                throw new Exception("\"Student registration number not found\"");
+            if (contact.getCollaborator() == null)
+                throw new Exception("\"Collaborator registration number not found\"");
 
-            if (transactionRepository.existsById(transaction.getTransactionId()))
-                throw new Exception("\"Transaction ID already exist\"");
+            if (transactionRepository.existsById(contact.getContactId()))
+                throw new Exception("\"Contact ID already exist\"");
 
-            transactionRepository.save(transaction);
+            transactionRepository.save(contact);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added the transaction successfully\"}";
+            String body = "{\"message\":\"Added the contact successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -57,18 +57,18 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<List<Transaction>> findAllTransactionsFromStudent(Integer studentRegistrationNumber) {
+    public ResponseEntity<List<Contact>> findAllTransactionsFromStudent(Integer studentRegistrationNumber) {
 
-        Student student = studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+        Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
 
-        List<Transaction> transactions = transactionRepository.findAllTransactionsFromStudent(student);
+        List<Contact> contacts = transactionRepository.findAllTransactionsFromStudent(COLLABORATOR);
 
-        transactions.forEach(transaction -> transaction.setStudentRegistrationNumber(transaction.getStudent().getStudentRegistrationNumber()));
+        contacts.forEach(contact -> contact.setCollaboratorId(contact.getCollaborator().getCollaboratorRegistrationNumber()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
 
-        return new ResponseEntity<>(transactions, headers, HttpStatus.OK);
+        return new ResponseEntity<>(contacts, headers, HttpStatus.OK);
     }
 
     @Transactional
@@ -76,13 +76,13 @@ public class TransactionService {
 
         try {
 
-            Transaction transaction = transactionRepository.findTransactionByTransactionId(transactionId);
+            Contact contact = transactionRepository.findTransactionByTransactionId(transactionId);
 
-            transactionRepository.deleteById(transaction.getTransactionId());
+            transactionRepository.deleteById(contact.getContactId());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Deleted the transaction successfully\"}";
+            String body = "{\"message\":\"Deleted the contact successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 

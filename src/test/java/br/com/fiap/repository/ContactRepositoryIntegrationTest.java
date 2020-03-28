@@ -2,8 +2,8 @@ package br.com.fiap.repository;
 
 import br.com.fiap.ProcessorApplication;
 import br.com.fiap.config.ProcessorMySqlContainer;
-import br.com.fiap.entity.Student;
-import br.com.fiap.entity.Transaction;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.entity.Contact;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -24,13 +24,13 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ProcessorApplication.class)
 @ActiveProfiles({"integrationTest"})
-public class TransactionRepositoryIntegrationTest {
+public class ContactRepositoryIntegrationTest {
 
     @ClassRule
     public static MySQLContainer processorMySqlContainer = ProcessorMySqlContainer.getInstance();
 
     @Autowired
-    StudentRepository studentRepository;
+    CollaboratorRepository collaboratorRepository;
 
     @Autowired
     TransactionRepository transactionRepository;
@@ -39,32 +39,32 @@ public class TransactionRepositoryIntegrationTest {
     @Transactional("transactionTransactionManager")
     public void insertTransactions() {
 
-        List<Student> students = new ArrayList<>();
-        List<Transaction> transactions = new ArrayList<>();
+        List<Collaborator> Collaborators = new ArrayList<>();
+        List<Contact> contacts = new ArrayList<>();
         for (int studentIndex = 1; studentIndex < 6; studentIndex++) {
-            students.add(new Student(studentIndex, "Name " + studentIndex));
+            Collaborators.add(new Collaborator(studentIndex, "Name " + studentIndex));
             for(int transactionIndex = 10; transactionIndex < 21; transactionIndex = transactionIndex + 10 ) {
-                transactions.add(new Transaction(transactionIndex + studentIndex, students.get(studentIndex-1), students.get(studentIndex-1).getStudentRegistrationNumber(), "123" + transactionIndex, 0.99 + transactionIndex, "transaction " + transactionIndex + studentIndex));
+                contacts.add(new Contact(transactionIndex + studentIndex, Collaborators.get(studentIndex-1), Collaborators.get(studentIndex-1).getStudentRegistrationNumber(), "123" + transactionIndex, 0.99 + transactionIndex, "transaction " + transactionIndex + studentIndex));
             }
         }
-        studentRepository.saveAll(students);
-        transactionRepository.saveAll(transactions);
+        collaboratorRepository.saveAll(Collaborators);
+        transactionRepository.saveAll(contacts);
     }
 
     @Test
     @Transactional
     public void shouldFindAllTransactionsFromStudent() {
-        List<Transaction> transactions = transactionRepository.findAllTransactionsFromStudent(new Student(1, "Name 1"));
+        List<Contact> contacts = transactionRepository.findAllTransactionsFromStudent(new Collaborator(1, "Name 1"));
 
-        assertTrue(transactions.get(0).getTransactionId() == 11);
-        assertTrue(transactions.get(1).getTransactionId() == 21);
+        assertTrue(contacts.get(0).getTransactionId() == 11);
+        assertTrue(contacts.get(1).getTransactionId() == 21);
     }
 
     @Test
     @Transactional
     public void shouldFindTransactionByTransactionId() {
-        Transaction transaction = transactionRepository.findTransactionByTransactionId(11);
+        Contact contact = transactionRepository.findTransactionByTransactionId(11);
 
-        assertTrue(transaction.getTransactionId() == 11);
+        assertTrue(contact.getTransactionId() == 11);
     }
 }

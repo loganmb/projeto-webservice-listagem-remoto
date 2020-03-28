@@ -2,9 +2,9 @@ package br.com.fiap.service;
 
 import br.com.fiap.ProcessorApplication;
 import br.com.fiap.config.ProcessorMySqlContainer;
-import br.com.fiap.entity.Student;
-import br.com.fiap.entity.Transaction;
-import br.com.fiap.repository.StudentRepository;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.entity.Contact;
+import br.com.fiap.repository.CollaboratorRepository;
 import br.com.fiap.repository.TransactionRepository;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ProcessorApplication.class)
 @ActiveProfiles({"integrationTest"})
-public class TransactionServiceIntegrationTest {
+public class ContactServiceIntegrationTest {
 
     @ClassRule
     public static MySQLContainer processorMySqlContainer = ProcessorMySqlContainer.getInstance();
@@ -34,7 +34,7 @@ public class TransactionServiceIntegrationTest {
     private TransactionService transactionService;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private CollaboratorRepository collaboratorRepository;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -43,23 +43,23 @@ public class TransactionServiceIntegrationTest {
     @Transactional("transactionManager")
     public void setUp() {
 
-        Transaction transaction = mockTransaction();
+        Contact contact = mockTransaction();
 
-        studentRepository.save(transaction.getStudent());
-        transactionRepository.save(transaction);
+        collaboratorRepository.save(contact.getCOLLABORATOR());
+        transactionRepository.save(contact);
     }
 
     @Test
     public void shouldAddTransactionSuccessfully() {
-        Transaction transaction = new Transaction(
+        Contact contact = new Contact(
                 2000,
                 mockStudent(),
                 333000,
                 "4532",
                 1.00,
-                "Transaction description"
+                "Contact description"
         );
-        ResponseEntity<String> response = transactionService.add(transaction);
+        ResponseEntity<String> response = transactionService.add(contact);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
@@ -69,29 +69,29 @@ public class TransactionServiceIntegrationTest {
         ResponseEntity<String> response = transactionService.add(mockTransaction());
 
         assertTrue(response.getStatusCode().is4xxClientError());
-        assertTrue(response.getBody().contains("Transaction ID already exist"));
+        assertTrue(response.getBody().contains("Contact ID already exist"));
     }
 
     @Test
     public void shouldThrowExceptionForNonStudent() {
-        Transaction transaction = new Transaction(
+        Contact contact = new Contact(
                 1000,
-                new Student(222000, "Name 3"),
+                new Collaborator(222000, "Name 3"),
                 222000,
                 "4532",
                 1.00,
-                "Transaction description"
+                "Contact description"
         );
 
-        ResponseEntity<String> response = transactionService.add(transaction);
+        ResponseEntity<String> response = transactionService.add(contact);
 
         assertTrue(response.getStatusCode().is4xxClientError());
-        assertTrue(response.getBody().contains("Student registration number not found"));
+        assertTrue(response.getBody().contains("Collaborator registration number not found"));
     }
 
     @Test
     public void shouldFindAllTransactionsFromStudent() {
-        ResponseEntity<List<Transaction>> response = transactionService.findAllTransactionsFromStudent(mockTransaction().getStudentRegistrationNumber());
+        ResponseEntity<List<Contact>> response = transactionService.findAllTransactionsFromStudent(mockTransaction().getStudentRegistrationNumber());
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
@@ -103,18 +103,18 @@ public class TransactionServiceIntegrationTest {
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
-    private Student mockStudent() {
-        return new Student(333000, "Student Name");
+    private Collaborator mockStudent() {
+        return new Collaborator(333000, "Collaborator Name");
     }
 
-    private Transaction mockTransaction() {
-        return new Transaction(
+    private Contact mockTransaction() {
+        return new Contact(
                 1000,
                 mockStudent(),
                 333000,
                 "4532",
                 1.00,
-                "Transaction description"
+                "Contact description"
         );
     }
 }

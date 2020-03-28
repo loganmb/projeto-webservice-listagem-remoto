@@ -1,7 +1,7 @@
 package br.com.fiap.repository;
 
-import br.com.fiap.entity.Student;
-import br.com.fiap.entity.Transaction;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.entity.Contact;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TransactionRepository extends CrudRepository<Transaction, Integer> {
+public interface TransactionRepository extends CrudRepository<Contact, Integer> {
 
-    @Query("SELECT t FROM Transaction t WHERE t.student = :studentRegistrationNumber")
-    public List<Transaction> findAllTransactionsFromStudent(@Param("studentRegistrationNumber") Student studentRegistrationNumber);
+    @Query("SELECT t FROM Contact t WHERE t.student = :CollaboratorRegistrationNumber")
+    public List<Contact> findAllTransactionsFromStudent(@Param("CollaboratorRegistrationNumber") Collaborator CollaboratorRegistrationNumber);
 
-    @Query("SELECT t FROM Transaction t WHERE t.transactionId = :transactionId")
-    public Transaction findTransactionByTransactionId(@Param("transactionId") Integer transactionId);
+    @Query("SELECT t FROM Contact t WHERE t.transactionId = :transactionId")
+    public Contact findTransactionByTransactionId(@Param("transactionId") Integer transactionId);
 }

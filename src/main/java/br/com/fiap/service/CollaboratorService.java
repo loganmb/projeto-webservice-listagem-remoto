@@ -5,8 +5,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.entity.Student;
-import br.com.fiap.repository.StudentRepository;
+import br.com.fiap.entity.Collaborator;
+import br.com.fiap.repository.CollaboratorRepository;
 import br.com.fiap.utils.NameFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,21 +17,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class StudentService {
+public class CollaboratorService {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private CollaboratorRepository collaboratorRepository;
 
     @Transactional
-    public ResponseEntity<String> add(Student student) {
+    public ResponseEntity<String> add(Collaborator COLLABORATOR) {
 
         try {
-            student.setName(NameFormatter.capitalizeName(student.getName()));
-            studentRepository.save(student);
+            COLLABORATOR.setName(NameFormatter.capitalizeName(COLLABORATOR.getName()));
+            collaboratorRepository.save(COLLABORATOR);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added the student successfully\"}";
+            String body = "{\"message\":\"Added the Collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -48,7 +48,7 @@ public class StudentService {
     @Transactional()
     public ResponseEntity<String> loadFromCsv() {
 
-        List<Student> students = new ArrayList<>();
+        List<Collaborator> Collaborators = new ArrayList<>();
 
         try {
 
@@ -56,17 +56,17 @@ public class StudentService {
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(";");
-                Student student = new Student(Integer.parseInt(data[1]), NameFormatter.capitalizeName(data[0]));
+                Collaborator COLLABORATOR = new Collaborator(Integer.parseInt(data[1]), NameFormatter.capitalizeName(data[0]));
 
-                students.add(student);
+                Collaborators.add(COLLABORATOR);
             }
             csvReader.close();
 
-            studentRepository.saveAll(students);
+            collaboratorRepository.saveAll(Collaborators);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Added all the students successfully\"}";
+            String body = "{\"message\":\"Added all the Collaborators successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -80,17 +80,17 @@ public class StudentService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateStudentByStudentRegistrationNumber(Student studentUpdate, Integer studentRegistrationNumber) {
+    public ResponseEntity<String> updateStudentByStudentRegistrationNumber(Collaborator CollaboratorUpdate, Integer studentRegistrationNumber) {
 
         try {
 
-            Student studentDatabase = studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator CollaboratorDatabase = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
 
-            studentDatabase.setName(studentUpdate.getName() == null || studentUpdate.getName().isEmpty()
-                    ? NameFormatter.capitalizeName(studentDatabase.getName())
-                    : NameFormatter.capitalizeName(studentUpdate.getName()));
+            CollaboratorDatabase.setName(CollaboratorUpdate.getName() == null || CollaboratorUpdate.getName().isEmpty()
+                    ? NameFormatter.capitalizeName(CollaboratorDatabase.getName())
+                    : NameFormatter.capitalizeName(CollaboratorUpdate.getName()));
 
-            studentRepository.save(studentDatabase);
+            collaboratorRepository.save(CollaboratorDatabase);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
@@ -113,13 +113,13 @@ public class StudentService {
 
         try {
 
-            Student student = studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
 
-            studentRepository.deleteById(student.getStudentRegistrationNumber());
+            collaboratorRepository.deleteById(COLLABORATOR.getStudentRegistrationNumber());
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"message\":\"Deleted the student successfully\"}";
+            String body = "{\"message\":\"Deleted the Collaborator successfully\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -134,18 +134,18 @@ public class StudentService {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Iterable<Collaborator> getAllStudents() {
+        return collaboratorRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<Student> findByName(String name) {
-        return studentRepository.findByName(name);
+    public List<Collaborator> findByName(String name) {
+        return collaboratorRepository.findByName(name);
     }
 
     @Transactional(readOnly = true)
-    public Student findByStudentRegistrationNumber(Integer studentRegistrationNumber) {
-        return studentRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+    public Collaborator findByStudentRegistrationNumber(Integer studentRegistrationNumber) {
+        return collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
     }
 
 }
