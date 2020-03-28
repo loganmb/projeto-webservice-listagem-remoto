@@ -84,7 +84,7 @@ public class CollaboratorService {
 
         try {
 
-            Collaborator CollaboratorDatabase = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator CollaboratorDatabase = collaboratorRepository.findByCollaboratorRegistrationNumber(studentRegistrationNumber);
 
             CollaboratorDatabase.setName(CollaboratorUpdate.getName() == null || CollaboratorUpdate.getName().isEmpty()
                     ? NameFormatter.capitalizeName(CollaboratorDatabase.getName())
@@ -113,7 +113,7 @@ public class CollaboratorService {
 
         try {
 
-            Collaborator COLLABORATOR = collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+            Collaborator COLLABORATOR = collaboratorRepository.findByCollaboratorRegistrationNumber(studentRegistrationNumber);
 
             collaboratorRepository.deleteById(COLLABORATOR.getCollaboratorRegistrationNumber());
 
@@ -144,8 +144,8 @@ public class CollaboratorService {
     }
 
     @Transactional(readOnly = true)
-    public Collaborator findByStudentRegistrationNumber(Integer studentRegistrationNumber) {
-        return collaboratorRepository.findByStudentRegistrationNumber(studentRegistrationNumber);
+    public Collaborator findByCollaboratorRegistrationNumber(Integer studentRegistrationNumber) {
+        return collaboratorRepository.findByCollaboratorRegistrationNumber(studentRegistrationNumber);
     }
 
 }
