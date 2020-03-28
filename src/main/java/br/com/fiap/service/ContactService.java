@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Service
-<<<<<<< Updated upstream:src/main/java/br/com/fiap/service/ContactService.java
 @RequestMapping("/contact")
-=======
-@RequestMapping("/transaction")
->>>>>>> Stashed changes:src/main/java/br/com/fiap/service/ContactService.java
 public class ContactService {
 
     @Autowired
@@ -61,20 +57,12 @@ public class ContactService {
     }
 
     @Transactional(readOnly = true)
-<<<<<<< Updated upstream:src/main/java/br/com/fiap/service/ContactService.java
-    public ResponseEntity<List<Contact>> findAllContactsFromCollaborator(Integer studentRegistrationNumber) {
 
-        Collaborator COLLABORATOR = collaboratorRepository.findByCollaboratorRegistrationNumber(studentRegistrationNumber);
-
-        List<Contact> contacts = contactRepository.findAllContactsFromCollaborator(COLLABORATOR);
-
-=======
     public ResponseEntity<List<Contact>> findAllContactsFromCollaborator(Integer CollaboratorRegistrationNumber) {
 
         Collaborator collaborator = collaboratorRepository.findByCollaboratorRegistrationNumber(CollaboratorRegistrationNumber);
 
         List<Contact> contacts = contactRepository.findAllContactsFromCollaborator(collaborator);
->>>>>>> Stashed changes:src/main/java/br/com/fiap/service/ContactService.java
 
         contacts.forEach(contact -> contact.setCollaboratorId(contact.getCollaborator().getCollaboratorRegistrationNumber()));
 
@@ -85,19 +73,11 @@ public class ContactService {
     }
 
     @Transactional
-<<<<<<< Updated upstream:src/main/java/br/com/fiap/service/ContactService.java
     public ResponseEntity<String> deleteContactById(Integer contactId) {
 
         try {
 
-            Contact contact = contactRepository.findContactByContactId(contactId);
-=======
-    public ResponseEntity<String> deleteTransactionById(Integer contactId) {
-
-        try {
-
             Contact contact = contactRepository.findContactById(contactId);
->>>>>>> Stashed changes:src/main/java/br/com/fiap/service/ContactService.java
 
             contactRepository.deleteById(contact.getContactId());
 
