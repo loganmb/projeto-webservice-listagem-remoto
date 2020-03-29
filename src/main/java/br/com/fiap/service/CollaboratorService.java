@@ -1,10 +1,13 @@
 package br.com.fiap.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.fiap.entity.Collaborator;
 import br.com.fiap.repository.CollaboratorRepository;
 import br.com.fiap.utils.NameFormatter;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -116,4 +119,19 @@ public class CollaboratorService {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<Collaborator> findByNameOrRegistrationNumber(String name, int id) {
+
+        List<Collaborator> collabs = new ArrayList<>();
+
+        try {
+            if (name == null || name.isEmpty())
+                collabs.add(collaboratorRepository.findByCollaboratorRegistrationNumber(id));
+            else
+                collabs = collaboratorRepository.findByName(name);
+        } catch (Exception e) {
+            return null;
+        }
+        return collabs;
+    }
 }

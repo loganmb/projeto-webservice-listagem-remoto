@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -94,6 +95,20 @@ public class CollaboratorController {
     public Collaborator findByCollaboratorRegistrationNumber(@PathVariable Integer collaboratorRegistrationNumber) {
 
         return collaboratorService.findByCollaboratorRegistrationNumber(collaboratorRegistrationNumber);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value="Search collaborator by given param (name or id)")
+    @ApiResponses(value={
+            @ApiResponse(code = 200, message = "Result ok!"),
+            @ApiResponse(code = 400, message = "Some parameter may be wrong"),
+            @ApiResponse(code= 500, message = "Well... Suppose the developer doesn't like you at all...")
+    })
+    public List<Collaborator> findCollaboratorByNameOrId(@RequestParam(required = false, defaultValue = "0") int id,
+                                                         @RequestParam(required = false, defaultValue = "") String name)
+    {
+        return collaboratorService.findByNameOrRegistrationNumber(name, id);
     }
 
 }
